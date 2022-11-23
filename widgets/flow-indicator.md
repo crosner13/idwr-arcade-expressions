@@ -1,10 +1,26 @@
 # Flow indicator widget
 
 This widget was originally created for use in the Trust Water Rights dashboard. It reads the attributes
-of a dynamic flow gauge service provided by Esri Livefeeds. 
+of a dynamic flow gauge service provided by Esri Livefeeds and styles an indicator widget based on a range of values. 
+
+## Use case
+
+This is designed specifically for Dashboards that use Indicator widgets to show values that could fall along a qualitative spectrum.
+In this example, we are displaying flow at certain points in our map and changing the widget appearance depending on the flow value. 
+
+Out of the box, Indicator widgets only show one color on either side of a defined threshold. This custom expression is a workaround for that limitation.
+The logic outlined in the expression template below can be applied to other widgets that display values you would like to showcase similarly. 
+
+## Workflow 
+
+After enabling Advanced formatting in Indicator options, copy and paste the expression found in the template below to the expression box. 
+
+To configure the widget to your layer, you must provide a field name for your data point that contains a numerical value. The expression can be
+further configured to have more descriptors if they are added to the `flowQuality` variable or the dictionary `flowIndicatorDict`. 
+
 
 ```js
-var flow = $datapoint["flow_cfs"]
+var flow = $datapoint["YOUR_FIELD_NAME_HERE"]
 
 var flowQuality = When(
     flow <= 3900, "Very Low",
@@ -90,4 +106,4 @@ return {
     // }
   }
 ```
-
+The `icon` is configured in the Indicator options, outside of Advanced formatting. 
