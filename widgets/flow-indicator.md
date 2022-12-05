@@ -22,13 +22,27 @@ further configured to have more descriptors if they are added to the `flowQualit
 ```js
 var flow = $datapoint["YOUR_FIELD_NAME_HERE"]
 
-var flowQuality = When(
+var winterMonths = [1,2,12];
+
+var currentMonth = ISOMonth(Date())
+
+if (Includes(winterMonths, currentMonth) == true) {
+    var flowQuality = When(
+    flow <= 5600, "Very Low",
+    flow > 5600 && flow <= 7800, "Low",
+    flow > 7800 && flow <= 11700, "Moderate",
+    flow > 11700 && flow <= 15600, "High",
+    flow > 15600, "Very High",
+    "Flow rate unavailable.");
+} else {
+    var flowQuality = When(
     flow <= 3900, "Very Low",
     flow > 3900 && flow <= 7800, "Low",
     flow > 7800 && flow <= 11700, "Moderate",
     flow > 11700 && flow <= 15600, "High",
     flow > 15600, "Very High",
-    "Flow rate unavailable.")
+    "Flow rate unavailable.");
+}
 
 var flowIndicatorDict = {
 	"Very Low": {
